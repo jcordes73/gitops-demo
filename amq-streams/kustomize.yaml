@@ -1,0 +1,3 @@
+resources:
+- amq-streams-sub.yaml
+- amq-streams.yaml
