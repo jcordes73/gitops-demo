@@ -11,7 +11,7 @@ spec:
   source:
     directory:
       recurse: true
-    path: camel-quarkus
+    path: app
     repoURL: https://github.com/jcordes73/gitops-demo.git
     targetRevision: HEAD 
   syncPolicy:
