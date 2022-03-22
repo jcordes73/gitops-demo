@@ -30,3 +30,5 @@ oc create -f config/application-gitops-demo-amq-streams.yaml
 
 
 ### Camel Quarkus Application
+
+oc new-app openshift/ubi8-openjdk-11:1.3~https://github.com/jcordes73/gitops-demo --context-dir=camel-quarkus --name=camel-quarkus
