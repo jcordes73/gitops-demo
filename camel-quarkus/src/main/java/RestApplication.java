@@ -24,6 +24,10 @@ public final class RestApplication extends RouteBuilder {
             .to("direct:createEvent");
 
         from("direct:createEvent")
+        .log("Received event ${body}")
         .to("kafka:events");
+
+        from("kafka:events")
+        .log("Consumed event ${body}");
     }
 }
