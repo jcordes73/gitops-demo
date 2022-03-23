@@ -1,3 +1,4 @@
 resources:
+- secret.yaml
 - deploymentconfig.yaml
 - service.yaml
