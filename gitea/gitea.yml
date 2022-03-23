@@ -13,7 +13,6 @@ spec:
   giteaSsl: true
   giteaAdminUser: admin
   giteaAdminPassword: "secret"
-  giteaAdminPasswordLength: 32
   giteaAdminEmail: integration@redhat.com
   giteaCreateUsers: true
   giteaGenerateUserFormat: "developer"

@@ -2,10 +2,9 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: postgres
-    app.kubernetes.io/component: postgres
-    app.kubernetes.io/instance: postgres
-    template: postgresql-ephemeral-template
+    app: postgresql-persistent
+    app.kubernetes.io/component: postgresql-persistent
+    app.kubernetes.io/instance: postgresql-persistent
   name: postgres
   namespace: gitops-demo
 spec:
@@ -40,7 +39,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: database-name
-              name: gitops
+              name: postgres
         image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:37636047d8fd31e1b9d941fb303ebf73703a03e918373463a46e4ce2b77c79f3
         imagePullPolicy: IfNotPresent
         livenessProbe:
@@ -83,8 +82,9 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - emptyDir: {}
-        name: postgres-data
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgres
   test: false
   triggers:
   - imageChangeParams:
