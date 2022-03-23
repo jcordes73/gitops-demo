@@ -40,7 +40,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: database-name
-              name: postgres
+              name: gitops
         image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:37636047d8fd31e1b9d941fb303ebf73703a03e918373463a46e4ce2b77c79f3
         imagePullPolicy: IfNotPresent
         livenessProbe:
