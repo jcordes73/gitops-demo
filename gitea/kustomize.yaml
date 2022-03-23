@@ -1,0 +1,4 @@
+resources:
+- catalog_source.yaml
+- gitea-sub.yaml
+- gitea.yaml

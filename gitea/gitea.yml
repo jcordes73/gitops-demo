@@ -1,0 +1,21 @@
+apiVersion: gpte.opentlc.com/v1
+kind: Gitea
+metadata:
+  name: gitea
+  namespace: gitops-demo
+spec:
+  postgresqlSetup: false
+  giteaPostgresqlServiceName: postgres
+  giteaPostgresqlDatabaseName: gitea
+  giteaPostgresqlUser: postgres
+  giteaPostgresqlPassword: postgres
+  giteaVolumeSize: 10Gi
+  giteaSsl: true
+  giteaAdminUser: admin
+  giteaAdminPassword: "secret"
+  giteaAdminPasswordLength: 32
+  giteaAdminEmail: integration@redhat.com
+  giteaCreateUsers: true
+  giteaGenerateUserFormat: "developer"
+  giteaUserNumber: 1
+  giteaUserPassword: openshift
