@@ -19,6 +19,9 @@ oc create -f config/openshift-gitops.yaml -n openshift-gitops
 
 (See also [Installing OpenShift GitOps](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.9/html/cicd/gitops#getting-started-with-openshift-gitops)
 
+oc new-app postgresql-ephemeral -p DATABASE_SERVICE_NAME=postgres -p POSTGRESQL_USER=postgres -p POSTGRESQL_PASSWORD=postgres -p POSTGRESQL_DATABASE=gitops --name=postgres
+
+
 ## Deploy Application
 
 The GitOps demo application consiste of two parts:
@@ -50,7 +53,14 @@ CAMEL_QUARKUS_HOST=`oc get route camel-quarkus -o json | jq -r '.spec.host'`
 curl -v -k -H "Content-Type: application/json" -X POST "https://${CAMEL_QUARKUS_HOST}/event" -d '{"id": "1", "status": "OK"}'
 ```
 
+In the Camel Quarkus pod you should now see the following log staments
+
+    INFO  [route1] (executor-thread-0) Received event {"id": "1", "status": "OK"}
+    INFO  [route2] (Camel (camel-1) thread #1 - KafkaConsumer[events]) Consumed event {"id": "1", "status": "OK"}
+
 The resources that you can find in **app** have been derived from thos that have been created by the following command:
 ```
 oc new-app openshift/ubi8-openjdk-11:1.3~https://github.com/jcordes73/gitops-demo --context-dir=camel-quarkus --name=camel-quarkus
 ```
+
+
