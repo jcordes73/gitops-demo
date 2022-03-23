@@ -1,13 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+    argocd.argoproj.io/sync-wave: '21'
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  labels:
+    gitops.ownedBy: gitops-demo
   name: gitops-demo-amq-streams
   namespace: openshift-gitops
 spec:
   destination:
     namespace: gitops-demo
     server: https://kubernetes.default.svc
-  project: default
+  project: gitops-demo
   source:
     directory:
       recurse: true
@@ -16,5 +22,10 @@ spec:
     targetRevision: HEAD 
   syncPolicy:
     automated:
-      prune: true
       selfHeal: true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

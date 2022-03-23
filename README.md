@@ -10,18 +10,27 @@ Demo for showcasing OpenShift GitOps
 
 ## Deploy OpenShift GitOps
 
-
+To deploy OpenShift GitOps (based on ArgoCD) you need to create a **namespace** and install the OpenShift GitOps **operator**:
 ```
 oc create namespace openshift-gitops
 oc create -f config/openshift-gitops-sub.yaml
-oc create -f config/openshift-gitops.yaml -n openshift-gitops
 ```
 
 (See also [Installing OpenShift GitOps](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.9/html/cicd/gitops#getting-started-with-openshift-gitops)
 
+## Deploy Gitea
+
+### Deploy Postgres
+
 oc new-app postgresql-ephemeral -p DATABASE_SERVICE_NAME=postgres -p POSTGRESQL_USER=postgres -p POSTGRESQL_PASSWORD=postgres -p POSTGRESQL_DATABASE=gitops --name=postgres
 
 
+## Prepare project on OpenShift
+
+To prepare the **gitops-demo** namespace, create an **application** called **cluster-configs** like this:
+```
+oc create -f config/application-cluster-configs.yaml
+```
 ## Deploy Application
 
 The GitOps demo application consiste of two parts:
@@ -32,9 +41,7 @@ The GitOps demo application consiste of two parts:
 ### AMQ Streams
 
 To deploy Apache Kafka (Red Hat AMQ Streams) execute the following
-
 ```
-oc create -f config/application-cluster-configs.yaml
 oc create -f config/application-gitops-demo-amq-streams.yaml
 ```
 This will create an ephemereal Apache Kafka cluster with three broker instance and a highly available Zookeeper control-plane.
@@ -63,4 +70,8 @@ The resources that you can find in **app** have been derived from thos that have
 oc new-app openshift/ubi8-openjdk-11:1.3~https://github.com/jcordes73/gitops-demo --context-dir=camel-quarkus --name=camel-quarkus
 ```
 
+## Cleanup
 
+```
+oc delete gitopsservice cluster -n openshift-gitops
+```
