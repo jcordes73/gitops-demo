@@ -6,7 +6,7 @@ metadata:
 spec:
   postgresqlSetup: false
   giteaPostgresqlServiceName: postgres
-  giteaPostgresqlDatabaseName: gitea
+  giteaPostgresqlDatabaseName: gitops
   giteaPostgresqlUser: postgres
   giteaPostgresqlPassword: postgres
   giteaVolumeSize: 10Gi
